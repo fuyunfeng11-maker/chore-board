@@ -130,6 +130,7 @@
   // >>> ADD THESE LINES (shared sheet config) <<<
   var BOARD_ID = 'main';                         // name your board (you can change later)
   var API_URL  = 'https://script.google.com/macros/s/AKfycbwWV8EGULZYno5RIj9TaRS-FlecsjbrchqSjtm7fVTw8Y0Ks9jR-9gSncMkpO8Kt3IP/exec';  // from the Apps Script "Web app" deployment
+  var SECRET   = 'a8X3KcYpK7jVw2qzM4tN9uB5D1rH6sL077904'; 
   var STATE    = null;                           // in-memory copy of the board state
   var POLL_MS  = 8000;                           // pull updates every 8 seconds
 
@@ -157,7 +158,7 @@
       await fetch(API_URL, {
         method:'POST',
         headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // avoids CORS preflight
-        body: JSON.stringify({ action:'saveState', boardId: BOARD_ID, state: s })
+        body: JSON.stringify({ action:'saveState', boardId: BOARD_ID, state: s, key: SECRET })
       });
     } catch(e) {
       console.warn('Could not save to shared sheet:', e);
