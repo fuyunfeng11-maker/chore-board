@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<!-- saved from url=(0147)file:///C:/Users/cgrey/OneDrive%20-%20Tankers%20(UK)%20Agencies%20Ltd/Private/Family%20Chore%20Board%20%E2%80%94%20Kids%20Theme%20(FINAL)%20V8.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Family Chore Board — Kids Theme (FINAL v8)</title>
+<style>
+  :root { --bg:#fff7ed; --panel:#ffffff; --panel2:#fff1f2; --text:#1f2937; --accent:#fb923c; --ok:#22c55e; --chip:#fde68a; --muted:#64748b; }
+  @keyframes confetti-pop { 0%{transform:translateY(-8px) scale(.9);opacity:.6} 100%{transform:translateY(0) scale(1);opacity:1} }
+  html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Inter,Arial,sans-serif}
+  header{position:sticky;top:0;z-index:10;background:linear-gradient(90deg,#ffedd5,#e0f2fe);border-bottom:2px solid #fecaca;padding:.9rem 1rem;display:flex;gap:.6rem;align-items:center;justify-content:space-between;flex-wrap:wrap}
+  header h1{margin:0;font-size:1.15rem;letter-spacing:.3px}
+  header h1::before{content:"✨ ";} header h1::after{content:" ✨";}
+  .toolbar button{background:#fff;border:2px solid #fbbf24;color:#1f2937;padding:.6rem .9rem;border-radius:14px;cursor:pointer;box-shadow:0 2px 0 #f59e0b;transition:transform .05s ease;font-weight:700}
+  .toolbar button:hover{transform:translateY(-1px)} .toolbar button:active{transform:translateY(0);box-shadow:0 1px 0 #d97706}
+  .wrap{max-width:1200px;margin:0 auto;padding:1rem}
+  .notice{background:linear-gradient(90deg,#fff7ed,#fce7f3);color:#374151;border:2px dashed #fbbf24;padding:.9rem 1rem;border-radius:16px}
+  .tabs,.daytabs{display:flex;gap:.5rem;flex-wrap:wrap;margin:.8rem 0 1rem}
+  .tab,.daytab{background:#fff;border:2px solid #93c5fd;color:#1f2937;padding:.55rem 1rem;border-radius:999px;cursor:pointer;font-weight:800;box-shadow:0 2px 0 #60a5fa}
+  .tab.active,.daytab.active{background:linear-gradient(90deg,#f9a8d4,#93c5fd);border-color:#a78bfa;color:#111827}
+  .grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .card{background:var(--panel);border:3px solid #fde68a;border-radius:18px;padding:1rem;box-shadow:0 10px 24px rgba(2,6,23,.08)}
+  .card.noah{border-color:#93c5fd}.card.betsey{border-color:#f9a8d4}.card.gracie{border-color:#86efac}.card.shared{border-color:#fde68a}
+  .card h2{margin:.2rem 0 .6rem;font-size:1.05rem;display:flex;justify-content:space-between;align-items:center;gap:.6rem}
+  .avatar{font-size:1.25rem;padding:.15rem .5rem;border-radius:10px}
+  .avatar.noah{background:#dbeafe}.avatar.betsey{background:#fce7f3}.avatar.gracie{background:#dcfce7}.avatar.shared{background:#fef9c3}
+  .section h3{margin:.6rem 0 .4rem;font-size:.95rem}
+  .row{display:flex;align-items:center;gap:.7rem;padding:.5rem .6rem;border-radius:10px}
+  .row:hover{background:#fff7ed}
+  input[type=checkbox]{width:1.6rem;height:1.6rem;accent-color:#fb923c;border-radius:6px}
+  .pill{background:var(--chip);border:2px solid #f59e0b;padding:.25rem .6rem;border-radius:999px;font-size:.8rem;color:#1f2937;font-weight:800}
+  .progress{display:flex;align-items:center;gap:1rem;margin-top:.4rem;flex-wrap:wrap}
+  .bar{flex:1;background:#fde68a;border:2px solid #f59e0b;border-radius:14px;height:12px;overflow:hidden;min-width:180px}
+  .bar>span{display:block;height:100%;background:linear-gradient(90deg,#22c55e,#60a5fa,#f472b6);width:0%}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.8rem;margin:1rem 0}
+  .stat{background:linear-gradient(180deg,#ffffff,#f3e8ff);border:3px solid #c084fc;border-radius:16px;padding:.9rem}
+  .tiny{font-size:.85rem;color:#374151}
+  .money{font-weight:800}
+  .badges{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.4rem}
+  .badge{border:2px solid #93c5fd;background:#eff6ff;border-radius:999px;padding:.2rem .6rem;font-size:.8rem;font-weight:800}
+  .badge.ok{border-color:#86efac;background:#dcfce7}.badge.no{border-color:#fecaca;background:#fee2e2;color:#7f1d1d}
+  .sticker{display:none;font-size:1.2rem;margin-left:.4rem;animation:confetti-pop .25s ease-out}
+  .sticker.show{display:inline}
+</style>
+</head>
+<body>
+<header>
+  <h1>Family Chore Board</h1>
+  <div class="toolbar">
+    <button id="todayBtn">Today</button>
+    <button id="resetBtn">Reset Day</button>
+    <button id="rotateBtn">Rotate Weekly Chores</button>
+    <button id="bonusBtn">Bonuses</button>
+    <button id="snapshotBtn">Snapshot PDF</button>
+    <button id="wipeBtn">Reset App Data</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="notice">
+    <b>House Rules</b>
+    <ul>
+      <li>No Xbox or mobile phone use in the morning. Mobile phones can be looked at once dressed AND have had breakfast. This applies on the weekend too and if not followed deductions will be made.</li>
+      <li>Phones must be handed to parents each evening before bed.</li>
+      <li>Weekends: phones can be used during the day (family plans permitting).</li>
+      <li>Xbox locked Mon–Thu; unlocked from Friday if weekly targets are met.</li>
+      <li>TV allowed from Friday night if all weekly chores are completed.</li>
+    </ul>
+    <div class="tiny" id="rotSum" style="margin:.3rem 0 0;">Weekly rotation: Feed Odie (morning) → Noah • Feed Odie (night) → Noah • Empty &amp; stack dishwasher → Betsey • Water plants → —</div>
+  </div>
+
+  <div id="stats" class="stats"><div class="stat"><div style="display: flex; justify-content: space-between; align-items: center;"><div>Noah — 8/70 (11%)</div><div class="money">£1.00</div></div><div class="bar"><span style="width: 11%;"></span></div><div class="tiny">Base £1.00 + Bonus £0.00 (cap £10 base; £1 per 10%)</div><div class="badges"><span class="badge no">Locked: Xbox</span><span class="badge no">Locked: iPad</span><span class="badge no">Locked: TV</span></div></div><div class="stat"><div style="display: flex; justify-content: space-between; align-items: center;"><div>Betsey — 8/67 (12%)</div><div class="money">£1.00</div></div><div class="bar"><span style="width: 12%;"></span></div><div class="tiny">Base £1.00 + Bonus £0.00 (cap £10 base; £1 per 10%)</div><div class="badges"><span class="badge no">Locked: Xbox</span><span class="badge no">Locked: iPad</span><span class="badge no">Locked: TV</span></div></div><div class="stat"><div style="display: flex; justify-content: space-between; align-items: center;"><div>Gracie — 8/64 (13%)</div><div class="money">£1.00</div></div><div class="bar"><span style="width: 13%;"></span></div><div class="tiny">Base £1.00 + Bonus £0.00 (cap £10 base; £1 per 10%)</div><div class="badges"><span class="badge no">Locked: Xbox</span><span class="badge no">Locked: iPad</span><span class="badge no">Locked: TV</span></div></div></div>
+
+  <div id="tabs" class="tabs"><button class="tab active">All</button><button class="tab">Noah</button><button class="tab">Betsey</button><button class="tab">Gracie</button></div>
+  <div id="daytabs" class="daytabs"><button class="daytab active">Monday</button><button class="daytab">Tuesday</button><button class="daytab">Wednesday</button><button class="daytab">Thursday</button><button class="daytab">Friday</button></div>
+  <div class="tiny" id="dayhint">Editing day: Monday 8 September</div>
+  <div id="board" class="grid"><div class="card shared"><h2><span>Shared 🧸</span><span class="pill">0/3</span></h2><div class="row"><label for="shared__0"><input type="checkbox" id="shared__0"><span>Walk Odie after school (long walk together)</span></label></div><div class="row"><label for="shared__1"><input type="checkbox" id="shared__1"><span>Clear the table after dinner</span></label></div><div class="row"><label for="shared__2"><input type="checkbox" id="shared__2"><span>Put shoes at the door / on shoe rack</span></label></div></div><div class="card noah"><h2><span class="avatar noah">🦖</span><span>Noah</span><span class="sticker">⭐</span></h2><div class="progress"><div class="bar"><span style="width: 57%;"></span></div><div class="tiny">8/14 today (57%)</div></div><div class="section"><h3>Daily — Morning</h3><div class="row"><label for="cb__Noah__Daily — Morning__0"><input type="checkbox" id="cb__Noah__Daily — Morning__0"><span>Bedroom tidy</span></label></div><div class="row"><label for="cb__Noah__Daily — Morning__1"><input type="checkbox" id="cb__Noah__Daily — Morning__1"><span>Bed made</span></label></div><div class="row"><label for="cb__Noah__Daily — Morning__2"><input type="checkbox" id="cb__Noah__Daily — Morning__2"><span>Brush teeth</span></label></div><div class="row"><label for="cb__Noah__Daily — Morning__3"><input type="checkbox" id="cb__Noah__Daily — Morning__3"><span>Blinds open</span></label></div><div class="row"><label for="cb__Noah__Daily — Morning__4"><input type="checkbox" id="cb__Noah__Daily — Morning__4"><span>Lights off</span></label></div><div class="row"><label for="cb__Noah__Daily — Morning__5"><input type="checkbox" id="cb__Noah__Daily — Morning__5"><span>Make own breakfast</span></label></div><div class="row"><label for="cb__Noah__Daily — Morning__6"><input type="checkbox" id="cb__Noah__Daily — Morning__6"><span>Pack school bag (night before)</span></label></div><div class="row"><label for="cb__Noah__Daily — Morning__7"><input type="checkbox" id="cb__Noah__Daily — Morning__7"><span>Feed Odie (morning)</span></label></div><div class="row"><label for="cb__Noah__Daily — Morning__8"><input type="checkbox" id="cb__Noah__Daily — Morning__8"><span>Feed Odie (night)</span></label></div></div><div class="section"><h3>Daily — After School / Evening</h3><div class="row"><label for="cb__Noah__Daily — After School / Evening__0"><input type="checkbox" id="cb__Noah__Daily — After School / Evening__0"><span>Do homework downstairs (parents check)</span></label></div><div class="row"><label for="cb__Noah__Daily — After School / Evening__1"><input type="checkbox" id="cb__Noah__Daily — After School / Evening__1"><span>Hang up towels</span></label></div></div></div><div class="card betsey"><h2><span class="avatar betsey">🦄</span><span>Betsey</span><span class="sticker">⭐</span></h2><div class="progress"><div class="bar"><span style="width: 57%;"></span></div><div class="tiny">8/14 today (57%)</div></div><div class="section"><h3>Daily — Morning</h3><div class="row"><label for="cb__Betsey__Daily — Morning__0"><input type="checkbox" id="cb__Betsey__Daily — Morning__0"><span>Bedroom tidy</span></label></div><div class="row"><label for="cb__Betsey__Daily — Morning__1"><input type="checkbox" id="cb__Betsey__Daily — Morning__1"><span>Bed made</span></label></div><div class="row"><label for="cb__Betsey__Daily — Morning__2"><input type="checkbox" id="cb__Betsey__Daily — Morning__2"><span>Brush teeth</span></label></div><div class="row"><label for="cb__Betsey__Daily — Morning__3"><input type="checkbox" id="cb__Betsey__Daily — Morning__3"><span>Blinds open</span></label></div><div class="row"><label for="cb__Betsey__Daily — Morning__4"><input type="checkbox" id="cb__Betsey__Daily — Morning__4"><span>Lights off</span></label></div><div class="row"><label for="cb__Betsey__Daily — Morning__5"><input type="checkbox" id="cb__Betsey__Daily — Morning__5"><span>Make own breakfast</span></label></div><div class="row"><label for="cb__Betsey__Daily — Morning__6"><input type="checkbox" id="cb__Betsey__Daily — Morning__6"><span>Pack school bag (night before)</span></label></div></div><div class="section"><h3>Daily — After School / Evening</h3><div class="row"><label for="cb__Betsey__Daily — After School / Evening__0"><input type="checkbox" id="cb__Betsey__Daily — After School / Evening__0"><span>Do homework downstairs (parents check)</span></label></div><div class="row"><label for="cb__Betsey__Daily — After School / Evening__1"><input type="checkbox" id="cb__Betsey__Daily — After School / Evening__1"><span>Music practice</span></label></div><div class="row"><label for="cb__Betsey__Daily — After School / Evening__2"><input type="checkbox" id="cb__Betsey__Daily — After School / Evening__2"><span>Hang up towels</span></label></div><div class="row"><label for="cb__Betsey__Daily — After School / Evening__3"><input type="checkbox" id="cb__Betsey__Daily — After School / Evening__3"><span>Empty &amp; stack dishwasher</span></label></div></div></div><div class="card gracie"><h2><span class="avatar gracie">🐼</span><span>Gracie</span><span class="sticker">⭐</span></h2><div class="progress"><div class="bar"><span style="width: 62%;"></span></div><div class="tiny">8/13 today (62%)</div></div><div class="section"><h3>Daily — Morning</h3><div class="row"><label for="cb__Gracie__Daily — Morning__0"><input type="checkbox" id="cb__Gracie__Daily — Morning__0"><span>Bedroom tidy</span></label></div><div class="row"><label for="cb__Gracie__Daily — Morning__1"><input type="checkbox" id="cb__Gracie__Daily — Morning__1"><span>Bed made</span></label></div><div class="row"><label for="cb__Gracie__Daily — Morning__2"><input type="checkbox" id="cb__Gracie__Daily — Morning__2"><span>Brush teeth</span></label></div><div class="row"><label for="cb__Gracie__Daily — Morning__3"><input type="checkbox" id="cb__Gracie__Daily — Morning__3"><span>Blinds open</span></label></div><div class="row"><label for="cb__Gracie__Daily — Morning__4"><input type="checkbox" id="cb__Gracie__Daily — Morning__4"><span>Lights off</span></label></div><div class="row"><label for="cb__Gracie__Daily — Morning__5"><input type="checkbox" id="cb__Gracie__Daily — Morning__5"><span>Make own breakfast</span></label></div><div class="row"><label for="cb__Gracie__Daily — Morning__6"><input type="checkbox" id="cb__Gracie__Daily — Morning__6"><span>Pack school bag (night before)</span></label></div></div><div class="section"><h3>Daily — After School / Evening</h3><div class="row"><label for="cb__Gracie__Daily — After School / Evening__0"><input type="checkbox" id="cb__Gracie__Daily — After School / Evening__0"><span>Do homework downstairs (parents check)</span></label></div><div class="row"><label for="cb__Gracie__Daily — After School / Evening__1"><input type="checkbox" id="cb__Gracie__Daily — After School / Evening__1"><span>Music practice</span></label></div><div class="row"><label for="cb__Gracie__Daily — After School / Evening__2"><input type="checkbox" id="cb__Gracie__Daily — After School / Evening__2"><span>Hang up towels</span></label></div></div></div></div>
+</div>
+
+<dialog id="bonusDlg">
+  <header style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;">
+    <h2>Weekly Bonuses / Deductions</h2>
+    <button onclick="document.getElementById(&#39;bonusDlg&#39;).close()">✕</button>
+  </header>
+  <p class="tiny">Enter bonuses (or deductions as negative). Added on top of base pocket money (max £10 base; £1 per 10% completion).</p>
+  <div id="bonusForm"></div>
+  <div style="display:flex; gap:.6rem; margin-top:.8rem;">
+    <button id="saveBonus">Save</button>
+    <button onclick="document.getElementById(&#39;bonusDlg&#39;).close()">Cancel</button>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  "use strict";
+
+  var CHILDREN=["Noah","Betsey","Gracie"];
+
+  // Base plan (non-rotating pieces)
+  var BASE_PLAN={
+    "Noah":{"Daily — Morning":["Bedroom tidy","Bed made","Brush teeth","Blinds open","Lights off","Make own breakfast","Pack school bag (night before)"],
+            "Daily — After School / Evening":["Do homework downstairs (parents check)","Hang up towels"]},
+    "Betsey":{"Daily — Morning":["Bedroom tidy","Bed made","Brush teeth","Blinds open","Lights off","Make own breakfast","Pack school bag (night before)"],
+              "Daily — After School / Evening":["Do homework downstairs (parents check)",{"label":"Music practice","days":["Mon","Thu"]},"Hang up towels"]},
+    "Gracie":{"Daily — Morning":["Bedroom tidy","Bed made","Brush teeth","Blinds open","Lights off","Make own breakfast","Pack school bag (night before)"],
+              "Daily — After School / Evening":["Do homework downstairs (parents check)",{"label":"Music practice","days":["Mon","Thu"]},"Hang up towels"]}
+  };
+
+  // Shared chores (some fortnightly)
+  var SHARED_SPEC=[
+    "Walk Odie after school (long walk together)",
+    "Clear the table after dinner",
+    "Put shoes at the door / on shoe rack",
+    {"label":"Bathe Odie (+£3 bonus, fortnightly)","fortnightly":true}
+  ];
+
+  // Rotating chores Mon–Fri (base owner defines rotation start)
+  var ROTATING=[
+    {"label":"Feed Odie (morning)","group":"Daily — Morning","days":["Mon","Tue","Wed","Thu","Fri"],"base":"Noah"},
+    {"label":"Feed Odie (night)","group":"Daily — Morning","days":["Mon","Tue","Wed","Thu","Fri"],"base":"Noah"},
+    {"label":"Empty & stack dishwasher","group":"Daily — After School / Evening","days":["Mon","Tue","Wed","Thu","Fri"],"base":"Betsey"},
+    {"label":"Water plants","group":"Daily — Morning","days":["Tue","Thu"],"base":"Gracie"}
+  ];
+
+  var STORAGE_KEY="choreBoard_KidsTheme_FINAL_v8";
+  var DEFAULTS={rotationIndex:0,days:{},bonuses:{}};
+
+  // >>> ADD THESE LINES (shared sheet config) <<<
+  var BOARD_ID = 'main';                         // name your board (you can change later)
+  var API_URL  = 'https://script.google.com/macros/s/AKfycbwWV8EGULZYno5RIj9TaRS-FlecsjbrchqSjtm7fVTw8Y0Ks9jR-9gSncMkpO8Kt3IP/exec';  // from the Apps Script "Web app" deployment
+  var STATE    = null;                           // in-memory copy of the board state
+  var POLL_MS  = 6000;                           // pull updates every 6 seconds
+
+  // >>> REPLACEMENT load/save that sync with Google Sheet <<<
+  function load(){
+    if (STATE) return JSON.parse(JSON.stringify(STATE)); // cheap clone
+    try {
+      STATE = JSON.parse(localStorage.getItem(STORAGE_KEY)||"null") || JSON.parse(JSON.stringify(DEFAULTS));
+    } catch(e) {
+      STATE = JSON.parse(JSON.stringify(DEFAULTS));
+    }
+    return JSON.parse(JSON.stringify(STATE));
+  }
+
+  function save(s){
+    // update fast locally (UI stays snappy)
+    STATE = JSON.parse(JSON.stringify(s));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+    // push to the shared sheet (fire-and-forget)
+    pushShared(STATE);
+  }
+
+  async function pushShared(s){
+    try {
+      await fetch(API_URL, {
+        method:'POST',
+        headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // avoids CORS preflight
+        body: JSON.stringify({ action:'saveState', boardId: BOARD_ID, state: s })
+      });
+    } catch(e) {
+      console.warn('Could not save to shared sheet:', e);
+    }
+  }
+
+  async function pullShared(){
+    try {
+      const res  = await fetch(API_URL + '?boardId=' + encodeURIComponent(BOARD_ID));
+      const data = await res.json(); // { state }
+      if (data && data.state) {
+        var server = data.state;
+        var local  = STATE || DEFAULTS;
+        var changed = JSON.stringify(server) !== JSON.stringify(local);
+        if (changed) {
+          STATE = server;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+          renderTabs(); renderDayTabs(); render(); // refresh UI with shared state
+        }
+      }
+    } catch(e) {
+      console.warn('Could not load from shared sheet:', e);
+    }
+  }
+
+
+  // Local-date helpers
+  function parseYMDLocal(ymd){var p=String(ymd).split("-");return new Date(+p[0],+p[1]-1,+p[2]);}
+  function formatYMDLocal(d){var y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),da=String(d.getDate()).padStart(2,"0");return y+"-"+m+"-"+da;}
+  function dayShortFromYMD(ymd){var d=parseYMDLocal(ymd);return ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][d.getDay()];}
+  function monday(){var now=new Date();var day=now.getDay();var delta=(day+6)%7;var mon=new Date(now.getFullYear(),now.getMonth(),now.getDate());mon.setDate(mon.getDate()-delta);mon.setHours(0,0,0,0);return mon;}
+  function weekDates(){var start=monday(),arr=[];for(var i=0;i<5;i++){var d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i);arr.push(formatYMDLocal(d));}return arr;}
+  function isoWeekLocal(d){var dt=new Date(d.getFullYear(),d.getMonth(),d.getDate());var dayNum=(dt.getDay()+6)%7;dt.setDate(dt.getDate()-dayNum+3);var ft=new Date(dt.getFullYear(),0,4);var fd=(ft.getDay()+6)%7;ft.setDate(ft.getDate()-fd+3);return 1+Math.round((dt-ft)/(7*86400000));}
+  function isFortnightWeek(ymd){return (isoWeekLocal(parseYMDLocal(ymd))%2)===0;}
+
+  function normalizeItemsForDay(items, short){var out=[];(items||[]).forEach(function(it){if(typeof it==="string"){out.push(it);}else{var label=it.label||"";var days=it.days||null;if(!days||days.indexOf(short)>=0)out.push(label);}});return out;}
+  function normalizeSharedForDay(spec, ymd){var short=dayShortFromYMD(ymd);var out=[];(spec||[]).forEach(function(it){if(typeof it==="string"){out.push(it);}else{var label=it.label||"";if(it.fortnightly){if(isFortnightWeek(ymd))out.push(label);}else{var days=it.days||null;if(!days||days.indexOf(short)>=0)out.push(label);}}});return out;}
+
+  function baseSnapshotForDay(s,ymd){var short=dayShortFromYMD(ymd),out={};CHILDREN.forEach(function(k){out[k]={};var groups=BASE_PLAN[k]||{};Object.keys(groups).forEach(function(g){out[k][g]=normalizeItemsForDay(groups[g],short);});});return out;}
+
+  function applyRotation(s,snap,ymd){
+    var short=dayShortFromYMD(ymd),n=CHILDREN.length||1;
+    // strip rotating chores first
+    ROTATING.forEach(function(rc){CHILDREN.forEach(function(k){var arr=snap[k]&&snap[k][rc.group]?snap[k][rc.group]:null;if(!arr)return;snap[k][rc.group]=arr.filter(function(x){return String(x).toLowerCase()!==rc.label.toLowerCase();});});});
+    // assign based on rotationIndex offset from base owner
+    ROTATING.forEach(function(rc){var baseOwner=rc.base||CHILDREN[0];var baseIdx=CHILDREN.indexOf(baseOwner);var to=((baseIdx>=0?baseIdx:0)+(s.rotationIndex||0))%n;var who=CHILDREN[to];
+      if(!rc.days||rc.days.indexOf(short)>=0){ if(!snap[who])snap[who]={}; if(!snap[who][rc.group])snap[who][rc.group]=[]; if(snap[who][rc.group].indexOf(rc.label)<0) snap[who][rc.group].push(rc.label); }});
+    return snap;
+  }
+  function choresForDay(s,ymd){return applyRotation(s, baseSnapshotForDay(s,ymd), ymd);}
+  function sharedForDay(s,ymd){return normalizeSharedForDay(SHARED_SPEC, ymd);}
+
+  function emptyDay(children, perChild, shared){var t={shared:shared.map(function(){return false;})};children.forEach(function(k){t[k]={};var groups=perChild[k]||{};Object.keys(groups).forEach(function(g){t[k][g]=(perChild[k][g]||[]).map(function(){return false;});});});return t;}
+  function ensureDay(s,ymd){var per=choresForDay(s,ymd),shared=sharedForDay(s,ymd);if(!s.days[ymd]){s.days[ymd]=emptyDay(CHILDREN,per,shared);return;}var d=s.days[ymd];if(!Array.isArray(d.shared))d.shared=[];for(var i=0;i<shared.length;i++){if(typeof d.shared[i]!=="boolean")d.shared[i]=false;}CHILDREN.forEach(function(k){if(!d[k])d[k]={};var groups=per[k]||{};Object.keys(groups).forEach(function(g){if(!Array.isArray(d[k][g]))d[k][g]=[];for(var j=0;j<groups[g].length;j++){if(typeof d[k][g][j]!=="boolean")d[k][g][j]=false;}});});}
+
+  var activeTab="All";
+  var activeDate=(function(){return formatYMDLocal(monday());})();
+
+  function h(t,c,txt){var el=document.createElement(t);if(c)el.className=c;if(typeof txt==="string")el.textContent=txt;return el;}
+
+  function rotationSummary(s){var snap=choresForDay(s,activeDate),list=[
+    {label:"Feed Odie (morning)",group:"Daily — Morning"},
+    {label:"Feed Odie (night)",group:"Daily — Morning"},
+    {label:"Empty & stack dishwasher",group:"Daily — After School / Evening"},
+    {label:"Water plants",group:"Daily — Morning"}
+  ],parts=[];list.forEach(function(rc){var who=null;CHILDREN.some(function(k){var arr=snap[k]&&snap[k][rc.group]?snap[k][rc.group]:[];if(arr.indexOf(rc.label)>=0){who=k;return true;}return false;});parts.push(rc.label+" → "+(who||"—"));});return parts.join(" • ");}
+
+  // Weekly stats & rewards (includes SHARED chores for each child)
+  function computeWeeklyStats(s){
+    var dates=weekDates(),tot={},dn={};
+    CHILDREN.forEach(function(k){tot[k]=0;dn[k]=0;});
+    dates.forEach(function(d){
+      ensureDay(s,d);
+      var per=choresForDay(s,d);
+      var sharedList=sharedForDay(s,d);
+      var sharedDone=(s.days[d]&&s.days[d].shared?s.days[d].shared.filter(Boolean).length:0);
+      CHILDREN.forEach(function(k){
+        var groups=per[k]||{};
+        Object.keys(groups).forEach(function(g){
+          var items=groups[g]||[];tot[k]+=items.length;
+          var ticks=(s.days[d]&&s.days[d][k]&&s.days[d][k][g])?s.days[d][k][g]:[];
+          for(var i=0;i<items.length;i++){if(ticks[i])dn[k]++;}
+        });
+        // shared count for everyone
+        tot[k]+=sharedList.length;
+        dn[k]+=sharedDone;
+      });
+    });
+    var out={};
+    CHILDREN.forEach(function(k){
+      var T=tot[k]||0,D=dn[k]||0,P=T?Math.round(100*D/T):0;
+      var base=Math.min(10,Math.floor(P/10)*1);
+      var bonus=Number((s.bonuses&&typeof s.bonuses[k]==="number")?s.bonuses[k]:0);
+      out[k]={total:T,done:D,pct:P,base:base,bonus:bonus,payout:(base+bonus),eligible:(P>=80)};
+    });
+    return out;
+  }
+
+  function renderStats(){var s=load();var stats=computeWeeklyStats(s);var box=document.getElementById("stats");box.innerHTML="";CHILDREN.forEach(function(k){var st=stats[k];var card=h("div","stat");var head=h("div");head.style.display="flex";head.style.justifyContent="space-between";head.style.alignItems="center";head.appendChild(h("div",null,k+" — "+st.done+"/"+st.total+" ("+st.pct+"%)"));head.appendChild(h("div","money","£"+st.payout.toFixed(2)));card.appendChild(head);var bar=h("div","bar");var span=document.createElement("span");span.style.width=st.pct+"%";bar.appendChild(span);card.appendChild(bar);card.appendChild(h("div","tiny","Base £"+st.base.toFixed(2)+" + Bonus £"+st.bonus.toFixed(2)+" (cap £10 base; £1 per 10%)"));var badges=h("div","badges");["Xbox","iPad","TV"].forEach(function(dev){badges.appendChild(h("span","badge "+(st.eligible?"ok":"no"),(st.eligible?"Unlocked: ":"Locked: ")+dev));});card.appendChild(badges);box.appendChild(card);});}
+
+  function renderTabs(){var s=load();var el=document.getElementById("tabs");el.innerHTML="";function mk(n){var b=h("button","tab"+(activeTab===n?" active":""),n);b.onclick=function(){activeTab=n;render();renderTabs();};return b;}el.appendChild(mk("All"));CHILDREN.forEach(function(k){el.appendChild(mk(k));});}
+  function renderDayTabs(){var labels=["Monday","Tuesday","Wednesday","Thursday","Friday"],dates=weekDates(),el=document.getElementById("daytabs"),hint=document.getElementById("dayhint");el.innerHTML="";labels.forEach(function(l,i){var d=dates[i];var b=h("button","daytab"+(activeDate===d?" active":""),l);b.onclick=function(){activeDate=d;renderDayTabs();render();};el.appendChild(b);});hint.textContent="Editing day: "+parseYMDLocal(activeDate).toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"});}
+
+  function renderSharedCard(s, day, ymd){var card=h("div","card shared");var shared=sharedForDay(s,ymd);var total=shared.length;var done=(day.shared||[]).filter(Boolean).length;var h2=document.createElement("h2");var left=h("span",null,"Shared 🧸");var right=h("span","pill",done+"/"+total);h2.appendChild(left);h2.appendChild(right);card.appendChild(h2);shared.forEach(function(label,idx){var row=h("div","row");var id="shared__"+idx;var input=document.createElement("input");input.type="checkbox";input.id=id;input.checked=!!(day.shared&&day.shared[idx]);var lab=document.createElement("label");lab.setAttribute("for",id);lab.appendChild(input);lab.appendChild(h("span",null,label));input.onchange=function(){var st=load();ensureDay(st,activeDate);st.days[activeDate].shared[idx]=input.checked;save(st);render();};row.appendChild(lab);card.appendChild(row);});return card;}
+
+  function render(){var s=load();if(!s.bonuses)s.bonuses={};CHILDREN.forEach(function(k){if(typeof s.bonuses[k]!=="number")s.bonuses[k]=0;});ensureDay(s,activeDate);var board=document.getElementById("board");board.innerHTML="";document.getElementById("rotSum").textContent="Weekly rotation: "+rotationSummary(s);renderStats();var day=s.days[activeDate];board.appendChild(renderSharedCard(s,day,activeDate));var show=(activeTab==="All")?CHILDREN:[activeTab];var per=choresForDay(s,activeDate);var shared=sharedForDay(s,activeDate);show.forEach(function(kid){var groups=per[kid]||{};var total=[].concat.apply([],Object.keys(groups).map(function(g){return groups[g];})).length+shared.length;var done=[].concat.apply([],Object.keys(day[kid]||{}).map(function(g){return day[kid][g];})).filter(Boolean).length+(day.shared||[]).filter(Boolean).length;var pct=total?Math.round(100*done/total):0;var card=h("div","card "+(kid.toLowerCase()==='noah'?'noah':kid.toLowerCase()==='betsey'?'betsey':kid.toLowerCase()==='gracie'?'gracie':''));var h2=document.createElement("h2");var avatar=h('span','avatar '+(kid.toLowerCase()),(kid==='Noah'?'🦖':(kid==='Betsey'?'🦄':(kid==='Gracie'?'🐼':''))));h2.appendChild(avatar);h2.appendChild(h("span",null,kid));var sticker=h('span','sticker','⭐');if(pct===100){sticker.classList.add('show');}h2.appendChild(sticker);card.appendChild(h2);var prog=document.createElement("div");prog.className="progress";var bar=h("div","bar");var span=document.createElement("span");span.style.width=pct+"%";bar.appendChild(span);prog.appendChild(bar);prog.appendChild(h("div","tiny",done+"/"+total+" today ("+pct+"%)"));card.appendChild(prog);Object.keys(groups).forEach(function(group){var sec=h("div","section");sec.appendChild(h("h3",null,group));(groups[group]||[]).forEach(function(label,idx){var row=h("div","row");var id="cb__"+kid+"__"+group+"__"+idx;var input=document.createElement("input");input.type="checkbox";input.id=id;input.checked=!!(day[kid]&&day[kid][group]&&day[kid][group][idx]);var lab=document.createElement("label");lab.setAttribute("for",id);lab.appendChild(input);lab.appendChild(h("span",null,label));input.onchange=function(){var st=load();ensureDay(st,activeDate);st.days[activeDate][kid][group][idx]=input.checked;save(st);render();};row.appendChild(lab);sec.appendChild(row);});card.appendChild(sec);});board.appendChild(card);});}
+
+  // Toolbar actions
+  document.getElementById("todayBtn").onclick=function(){var t=new Date(),dow=t.getDay(),dates=weekDates(),ymd=formatYMDLocal(t);activeDate=(dow>=1&&dow<=5&&dates.indexOf(ymd)>=0)?ymd:dates[0];renderDayTabs();render();};
+  document.getElementById("resetBtn").onclick=function(){if(!confirm("Reset ticks for this weekday?"))return;var s=load();var per=choresForDay(s,activeDate);var shared=sharedForDay(s,activeDate);s.days[activeDate]=emptyDay(CHILDREN,per,shared);save(s);render();};
+  document.getElementById("wipeBtn").onclick = function () {
+  if (!confirm("Clear all saved data (ticks/bonuses/rotation) for EVERYONE?")) return;
+  var fresh = JSON.parse(JSON.stringify(DEFAULTS)); // { rotationIndex:0, days:{}, bonuses:{} }
+  save(fresh);                                      // writes to local + shared Google Sheet
+  renderTabs();
+  renderDayTabs();
+  render();
+};
+
+  document.getElementById("rotateBtn").onclick=function(){var s=load();if(!confirm("Rotate weekly chores to the next child? This resets Mon–Fri ticks so Monday reflects new assignments."))return;s.rotationIndex=((s.rotationIndex||0)+1)%CHILDREN.length;s.days={};weekDates().forEach(function(d){ensureDay(s,d);});save(s);renderTabs();renderDayTabs();render();};
+
+  // Bonuses dialog
+  document.getElementById("bonusBtn").onclick=function(){var s=load();var f=document.getElementById("bonusForm");f.innerHTML="";CHILDREN.forEach(function(k){var row=document.createElement("div");row.style.margin=".3rem 0";var lab=document.createElement("label");lab.textContent=k;lab.style.width="90px";lab.style.display="inline-block";var inp=document.createElement("input");inp.type="number";inp.step="0.5";inp.value=(s.bonuses&&typeof s.bonuses[k]==="number")?s.bonuses[k]:0;inp.id="b__"+k;row.appendChild(lab);row.appendChild(inp);f.appendChild(row);});document.getElementById("bonusDlg").showModal();};
+  document.getElementById("saveBonus").onclick=function(){var s=load();CHILDREN.forEach(function(k){var v=parseFloat(document.getElementById("b__"+k).value||"0");if(!s.bonuses)s.bonuses={};s.bonuses[k]=isNaN(v)?0:v;});save(s);document.getElementById("bonusDlg").close();render();};
+
+  // Snapshot PDF generator (print-friendly)
+  function escapeHtml(s){return String(s).replace(/[&<>"']/g,function(m){return({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]);});}
+  function listForKidOnDay(perKid,kid){var out=[],groups=perKid[kid]||{};Object.keys(groups).forEach(function(g){(groups[g]||[]).forEach(function(label){out.push(label);});});return out;}
+  function buildSnapshotHTML(state){
+    var dates=weekDates(); var kids=["Noah","Betsey","Gracie"];
+    var head='<!doctype html><html><head><meta charset="utf-8"><title>Weekly Chores Snapshot</title>'+
+      '<style>@page{size:A4;margin:10mm}body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:12px;background:#fff;color:#111}'+
+      'h1{font-size:18px;margin:0 0 8px}.meta{font-size:12px;color:#555;margin:0 0 8px}'+
+      'table{border-collapse:collapse;width:100%;table-layout:fixed}th,td{border:1px solid #999;padding:6px;vertical-align:top;font-size:12px}'+
+      'thead th{background:#e6f0ff}.day{width:13%}.col{width:22%}.cb{display:inline-block;border:1px solid #333;width:10px;height:10px;margin-right:6px}'+
+      '</style></head><body>';
+    var title='<h1>Weekly Chores Snapshot (Mon–Fri)</h1>';
+    var meta='<div class="meta">Rotation shown for this week • Generated: '+new Date().toLocaleString()+'</div>';
+    var table='<table><thead><tr><th class="day">Day</th><th class="col">Noah</th><th class="col">Betsey</th><th class="col">Gracie</th><th class="col">Shared</th></tr></thead><tbody>';
+    for(var i=0;i<5;i++){var ymd=dates[i];ensureDay(state,ymd);var perKid=choresForDay(state,ymd);var shared=sharedForDay(state,ymd);
+      function renderList(arr){if(!arr||!arr.length)return '';return arr.map(function(label){return '<div><span class="cb"></span>'+escapeHtml(label)+'</div>';}).join('');}
+      table+='<tr><td><b>'+parseYMDLocal(ymd).toLocaleDateString(undefined,{weekday:"long"})+'</b></td>'+
+             '<td>'+renderList(listForKidOnDay(perKid,"Noah"))+'</td>'+
+             '<td>'+renderList(listForKidOnDay(perKid,"Betsey"))+'</td>'+
+             '<td>'+renderList(listForKidOnDay(perKid,"Gracie"))+'</td>'+
+             '<td>'+renderList(shared)+'</td></tr>';
+    }
+    table+='</tbody></table>'; return head+title+meta+table+'</body></html>';
+  }
+  function openSnapshot(){
+    var s = load();
+    try{var html=buildSnapshotHTML(s);var w=window.open("","_blank");if(!w){alert("Pop-up blocked — please allow pop-ups.");return;}w.document.open();w.document.write(html);w.document.close();setTimeout(function(){w.focus();w.print();},350);}catch(e){console.error(e);alert("Couldn't generate the snapshot. Please try again.");}
+  }
+  document.getElementById("snapshotBtn").onclick=openSnapshot;
+
+  // >>> async init: show local first, then pull shared + start polling
+  async function init(){
+    renderTabs(); renderDayTabs(); render(); // draw quickly from local/offline state
+    await pullShared();                      // then adopt shared state if present
+    setInterval(pullShared, POLL_MS);        // keep everyone in sync
+  }
+
+  init();
+})();</script>
+
+
+</body></html>
